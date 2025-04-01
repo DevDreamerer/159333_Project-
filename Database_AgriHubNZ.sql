@@ -1,9 +1,3 @@
--- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
---
--- Host: 127.0.0.1    Database: AgriHubNZ
--- ------------------------------------------------------
--- Server version	8.0.19
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -18,7 +12,7 @@
 --
 -- Current Database: `AgriHubNZ`
 --
-
+DROP DATABASE IF EXISTS `AgriHubNZ`;
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `AgriHubNZ` /*!40100 DEFAULT CHARACTER SET utf8 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 
 USE `AgriHubNZ`;
@@ -43,7 +37,7 @@ CREATE TABLE `cart` (
   KEY `userId` (`user_id`),
   CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
   CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=326 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +64,7 @@ CREATE TABLE `order_detail` (
   `cost` float NOT NULL COMMENT 'Cost',
   PRIMARY KEY (`id`),
   UNIQUE KEY `PK__EASYBUY___66E1BD8E2F10007B` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=178 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,10 +93,12 @@ CREATE TABLE `orders` (
   `create_time` datetime DEFAULT NULL COMMENT 'Create_Time',
   `update_time` datetime NOT NULL COMMENT 'Update_Time',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=178 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-
+--
+-- Dumping data for table `orders`
+--
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
@@ -128,9 +124,17 @@ CREATE TABLE `product` (
   `file_name` varchar(200) DEFAULT NULL COMMENT 'File_Name',
   PRIMARY KEY (`id`),
   UNIQUE KEY `PK__EASYBUY___94F6E55132E0915F` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=777 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `product`
+--
+
+LOCK TABLES `product` WRITE;
+/*!40000 ALTER TABLE `product` DISABLE KEYS */;
+/*!40000 ALTER TABLE `product` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `product_category`
@@ -146,10 +150,17 @@ CREATE TABLE `product_category` (
   `type` int DEFAULT NULL COMMENT 'Level (1:Level 1 2:Level 2 3:Level 3)',
   PRIMARY KEY (`id`),
   UNIQUE KEY `PK__EASYBUY___9EC2A4E236B12243` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=697 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `product_category`
+--
 
+LOCK TABLES `product_category` WRITE;
+/*!40000 ALTER TABLE `product_category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `product_category` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `user`
@@ -164,16 +175,24 @@ CREATE TABLE `user` (
   `user_name` varchar(255) NOT NULL COMMENT 'Use_Name',
   `password` varchar(255) NOT NULL COMMENT 'Password',
   `gender` int NOT NULL DEFAULT '1' COMMENT 'Sex (1: male 0: female)',
-  `email` varchar(80) DEFAULT NULL COMMENT 'Email',
-  `mobile` varchar(11) DEFAULT NULL COMMENT 'Mobile',
+  `email` varchar(80) DEFAULT NULL Unique COMMENT 'Email',
+  `mobile` varchar(11) DEFAULT NULL Unique COMMENT 'Mobile',
   `file_name` varchar(255) DEFAULT NULL,
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `PK__EASYBUY___C96109CC3A81B327` (`login_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `user_address`
@@ -191,10 +210,17 @@ CREATE TABLE `user_address` (
   `create_time` datetime DEFAULT NULL COMMENT 'Create_Time',
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `user_address`
+--
 
+LOCK TABLES `user_address` WRITE;
+/*!40000 ALTER TABLE `user_address` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_address` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
