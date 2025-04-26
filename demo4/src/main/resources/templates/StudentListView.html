@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<!--<html lang="en">-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .main {
+            margin-top: 60px;
+        }
+
+        .main select {
+            width: 190px !important;
+        }
+
+        .table td {
+            text-align: center;
+            line-height: 25px !important;
+        }
+
+        article {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            margin-bottom: 0px !important;
+        }
+    </style>
+</head>
+
+
+<body>
+<!-- 导航栏 -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">测试项目</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">学生信息</a></li>
+                <li><a href="./add.html">录入学生</a></li>
+                <li><a href="#about">关于</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container main">
+    <!-- 条件搜索 -->
+    <article>
+        <form class="form-inline" action="/getStudents" id="form1" method="post">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="hidden" name="currentPage" id="currentPage" th:value="${currentPage}">
+                    <input type="hidden" name="currentPage" id="pageCount" th:value="${pageCount}">
+                    <label for="exampleInputName2">名称：</label>
+                    <input type="text" class="form-control" id="exampleInputName2" placeholder="请输入名称"
+                           th:value="${sname}" name="sname">
+                </div>
+                <div class="col-md-3">
+                    <label for="sel1">班级:</label>
+                    <select class="form-control" id="sel1" name="gid">
+                        <option value="">所有</option>
+                        <option th:each="grade :${grades}" th:text="${grade.name}" th:value="${grade.id}"
+                                th:selected="${selectval} eq ${grade.id}"></option>
+
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary">查询学生</button>
+                </div>
+            </div>
+        </form>
+    </article>
+    <!-- 数据表格 -->
+    <table class="table table-bordered table-hover table-striped" th:id="table_st">
+        <tr>
+            <td width="10%">#</td>
+            <td width="10%">姓名</td>
+            <td width="10%">性别</td>
+            <td width="15%">电话</td>
+            <td width="10%">班级</td>
+            <td width="10%">选修</td>
+            <td>地址</td>
+            <td width="15%">操作</td>
+        </tr>
+        <!--        <tr>-->
+        <!--            <td>1001</td>-->
+        <!--            <td>王涛</td>-->
+        <!--            <td>男</td>-->
+        <!--            <td>15269693214</td>-->
+        <!--            <td>一班</td>-->
+        <!--            <td>JAVA</td>-->
+        <!--            <td>山东济南</td>-->
+        <!--            <td>-->
+        <!--                <div class="action">-->
+        <!--                    <button class="btn btn-primary btn-xs" data-toggle="modal"  data-target="#editStudentModal">修改</button>-->
+        <!--                    <button class="btn btn-danger btn-xs">删除</button>-->
+        <!--                </div>-->
+        <!--            </td>-->
+        <!--        </tr>-->
+        <tr th:each="st : ${students}" th:id="${st.id}">
+            <td th:text="${st.id}"></td>
+            <td th:text="${st.name}"></td>
+            <td th:text="${st.sex=='1'?'男':'女'}">
+
+
+            </td>
+            <td th:text="${st.phone}"></td>
+            <td th:text="${st.grade.name}"></td>
+            <td th:text="${st.elective.name}"></td>
+            <td th:text="${st.address}"></td>
+            <td>
+                <div class="action">
+                    <!--  <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editStudentModal"
+                              th:onclick="updateStudent([[${st}]])">修改
+                      </button>-->
+                    <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editStudentModal"
+                            onclick="updateStudent(this)">修改
+                    </button>
+
+                    <button class="btn btn-danger btn-xs" th:onclick="deleteStudent([[${st}]])">删除</button>
+                </div>
+            </td>
+
+        </tr>
+
+    </table>
+    <!-- 分页信息 -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a th:onclick="pageUpdate([[${currentPage-1}]]);" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <!--            <li class="active"><a href="#">1</a></li>-->
+            <!--            <li><a href="#">2</a></li>-->
+            <!--            <li><a href="#">3</a></li>-->
+            <!--            <li><a href="#">4</a></li>-->
+            <!--            <li><a href="#">5</a></li>-->
+
+
+            <li th:each="index:${#numbers.sequence(1, pageCount)}" th:class="${currentPage==index}?'active':''">
+                <a th:onclick="pageUpdate([[${index}]]);" th:text="${index}"></a>
+
+
+            </li>
+
+            <li>
+                <a th:onclick="pageUpdate([[${currentPage+1}]]);" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- 修改学生信息模态框内容 -->
+    <div class="modal fade  bs-example-modal-lg" id="editStudentModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog  modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">修改学生信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="form2" method="post" action="">
+                        <div class="form-group">
+                            <input type="hidden" id="st_id">
+                            <label for="recipient-name" class="control-label">姓名:</label>
+                            <input type="text" class="form-control" id="recipient-name" required placeholder="请输入姓名">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-sex" class="control-label">性别:</label>
+<!--                            <input type="text" class="form-control" id="recipient-sex" required placeholder="请输入性别">-->
+
+                            <select name="" id="recipient-sex" class="form-control" style="width:100% !important" autocomplete="off">
+                                <option value="1"  >男</option>
+                                <option value="2" >女</option>
+                            </select>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-phone" class="control-label">电话:</label>
+                            <input type="text" class="form-control" id="recipient-phone" required placeholder="请输入电话">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-grads" class="control-label">班级:</label>
+                            <select class="form-control" id="recipient-grads" style="width:100% !important" autocomplete="off">
+
+
+                                <option th:each="grade :${grades}" th:text="${grade.name}"
+                                        th:value="${grade.id}"></option>
+
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-elective" class="control-label">选修:</label>
+                            <select class="form-control" id="recipient-elective" style="width:100% !important" autocomplete="off">
+                                <!--                                <option>C++</option>-->
+                                <!--                                <option>C#</option>-->
+                                <!--                                <option>JAVA</option>-->
+                                <option th:each="elective :${electives}" th:text="${elective.name}"
+                                        th:value="${elective.id}"></option>
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-address" class="control-label">地址:</label>
+                            <textarea class="form-control" id="message-address" required placeholder="请输入地址"></textarea>
+                        </div>
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="subForm()" data-dismiss="modal">保存</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--确认删除-->
+
+
+</div>
+<!--<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>-->
+
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>-->
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script language="JavaScript">
+    // $(function () {
+    //
+    //
+    // })
+
+    /*进入修改学生信息窗体 加载数据*/
+    function updateStudent(/*student*/button) {
+
+        var childrens = $(button).parents("tr").children("td");
+
+
+        if (false) {
+            $("#st_id").val(student.id);
+            $("#recipient-name").val(student.name);
+
+            $("#recipient-phone").val(student.phone);
+
+
+            $("#message-address").val(student.address);
+
+
+            /*性别选中*/
+
+            $("#recipient-sex option").each(function () {
+                if ($(this).val() == student.sex) {
+                    $(this).attr("selected", true);
+
+                }
+            });
+
+            /*班级选中*/
+            var gradname = student.grade.name;
+            $("#recipient-grads option").each(function () {
+                if ($(this).text() == gradname) {
+                    $(this).attr("selected", true);
+
+                }
+            });
+            /*科目选中*/
+            var elective_name = student.elective.name;
+            $("#recipient-elective option").each(function () {
+                if ($(this).text() == elective_name) {
+                    $(this).attr("selected", true);
+
+                }
+            });
+        } else {
+            $("#st_id").val(childrens.eq(0).text());
+            $("#recipient-name").val(childrens.eq(1).text());
+
+            $("#recipient-phone").val(childrens.eq(3).text());
+
+
+            $("#message-address").val(childrens.eq(6).text());
+
+            /*性别选中*/
+           var sex= childrens.eq(2).text()
+            $("#recipient-sex option").each(function () {
+                if ($(this).text() == sex) {
+                    $(this).attr("selected", true);
+
+                }
+            });
+
+
+            /*班级选中*/
+            var gradname = childrens.eq(4).text();
+         //   alert(gradname);
+            $("#recipient-grads option").each(function () {
+               var gradname2= $(this).text();
+                if (gradname==gradname2 ) {
+                    //$(this).attr("selected", true);
+                    $(this).prop("selected", true);
+
+                }
+            });
+            /*科目选中*/
+            var elective_name = childrens.eq(5).text();
+            $("#recipient-elective option").each(function () {
+                if ($(this).text() == elective_name) {
+                   // $(this).attr("selected", true);
+                    $(this).prop("selected", true);
+
+                }
+            });
+        }
+
+
+        //  $('#recipient-grads option[text="+gradname+"]').attr("selected",true);
+        //$('#recipient-grads option[text=gradname]').attr("selected",true);
+
+    }
+
+    /*分页点击事件*/
+    function pageUpdate(currentPage) {
+
+
+        var pageCount = $("#pageCount").val();
+        if (currentPage > 0 && currentPage <= pageCount) {
+
+
+            $("#currentPage").val(currentPage)
+            $("#form1").submit();
+        }
+
+    }
+
+    /*修改学生*/
+    function subForm() {
+        /*    alert("进入");*/
+        var st_id = $("#st_id").val();
+        var st_name = $("#recipient-name").val();
+        var st_sex = $("#recipient-sex").val();
+        var st_phone = $("#recipient-phone").val();
+        var grade_id = $("#recipient-grads").val();
+        var grade_name = $("#recipient-grads").find("option:selected").text();
+        var elective_id = $("#recipient-elective").val();
+        var elective_name = $("#recipient-elective").find("option:selected").text();
+        var address = $("#message-address").val();
+
+
+        let student1 = {
+            "id": st_id,
+            "name": st_name,
+            "sex": st_sex,
+            "phone": st_phone,
+            // "gradeId":grade_id,
+            // "electiveId":elective_id,
+            "grade": {
+                "id": grade_id,
+                "name": grade_name
+            },
+            "elective": {
+                "id": elective_id,
+                "name": elective_name
+            },
+            "address": address
+
+        };
+        //
+        // //     $.ajax({
+        // //         url：请求地址
+        // //     type:"get | post | put | delete " 默认是get,
+        // //         data:请求参数 {"id":"123","pwd":"123456"},
+        // //     dataType:请求数据类型"html | text | json | xml | script | jsonp ",
+        // //         success:function(data,dataTextStatus,jqxhr){ },//请求成功时error:function(jqxhr,textStatus,error)//请求失败时
+        // // })
+        //
+        //
+        //
+        $.ajax({
+            type: 'post',
+            url: '/updateStudent',
+            contentType: "application/json",
+            data: /*student1*/JSON.stringify(student1),
+            dataType: 'json',
+            timeout: 3000,
+            cache: false,
+            async: true,
+            success: function (data) {
+                if (data.result >= 1) {
+                    var st = data.student;
+
+                    /*      alert(data.id);*/
+                    var ddd = st.id;
+                    //根据学生id找到 所在 td和所在 tr
+                    var tds = $("#table_st tr[id=" + st.id + "] td");
+                    /*       alert(tds.length);*/
+                    if (tds != null && tds.length >= 7) {
+                        /*刷新*/
+                        tds.eq(1).text(st.name);
+                        tds.eq(2).text(st.sex);
+                        tds.eq(3).text(st.phone);
+                        tds.eq(4).text(st.grade.name);
+                        tds.eq(5).text(st.elective.name);
+                        tds.eq(6).text(st.address);
+
+                        alert("已保存");
+                        // for(var i=0;i<tds.length;i++{
+                        //
+                        // }
+                        // $("#form2").submit();
+                    }
+                } else {
+
+                    alert("修改失败");
+                }
+
+            }
+        })
+
+
+    }
+
+    /*删除学生*/
+    function deleteStudent(st) {
+
+        // alert(st.id);
+        if (confirm("确定删除学生吗?")) {
+            /*  $.get("/deleteStudent",{id:st.id},function(data){
+                alert(data);
+
+            })*/
+
+            // var data={id:st.id};
+
+            $.ajax({
+
+                type: "get",
+                url:"/deleteStudent",
+                contentType: "application/json",
+                data: {id:st.id},
+                dataType: 'json',
+
+                success: function (msg) {
+                    alert(msg.result);
+
+                    //移除页面上的这条数据
+                 $("#table_st tr[id="+st.id+"]").remove();
+
+
+
+
+
+
+                },error:function(data){
+                    alert(data);
+
+                }
+
+
+            })
+
+        }
+
+
+
+    }
+</script>
+
+</body>
+</html>
