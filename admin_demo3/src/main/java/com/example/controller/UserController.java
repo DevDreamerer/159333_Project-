@@ -31,7 +31,7 @@ public class UserController {
     public String listUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("user", new User()); // 用于表单绑定
-        return "list";
+        return "user_admin";
     }
 
 //    @PostMapping("/save")
@@ -60,7 +60,7 @@ public class UserController {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         model.addAttribute("user", user);
-        return "list";
+        return "user_admin";
     }
 
 }
