@@ -52,9 +52,9 @@
                     <td th:text="${address.id}"></td>
                     <td th:text="${address.address}"></td>
                     <td th:text="${address.createTime}"></td>
-                    <td th:text="${address.remark}">公司</td>
-                    <td th:if="${address.isdefault == 1}">是</td>
-                    <td th:if="${address.isdefault == 0}">否</td>
+                    <td th:text="${address.remark}">PL</td>
+                    <td th:if="${address.isdefault == 1}">Yes</td>
+                    <td th:if="${address.isdefault == 0}">No</td>
                     <td>
                         <a href="">Delete</a>
                         <a href="">Change</a>
