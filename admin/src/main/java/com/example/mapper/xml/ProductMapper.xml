@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ProductMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="productResultMap" type="Product">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="price" property="price"/>
+        <result column="stock" property="stock"/>
+        <result column="categorylevelone_id" property="categoryLevelOneId"/>
+        <result column="categoryleveltwo_id" property="categoryLevelTwoId"/>
+        <result column="categorylevelthree_id" property="categoryLevelThreeId"/>
+        <result column="file_name" property="fileName"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 根据分类查询商品 -->
+    <select id="findByCategoryId" resultMap="productResultMap">
+        SELECT * FROM product
+        <where>
+            <choose>
+                <when test="categoryLevel == 1">
+                    categorylevelone_id = #{categoryId}
+                </when>
+                <when test="categoryLevel == 2">
+                    categoryleveltwo_id = #{categoryId}
+                </when>
+                <when test="categoryLevel == 3">
+                    categorylevelthree_id = #{categoryId}
+                </when>
+                <otherwise>1 = 0</otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <!-- 根据名称模糊搜索 -->
+    <select id="searchByName" resultMap="productResultMap">
+        SELECT * FROM product
+        WHERE name LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
+</mapper>
