@@ -74,7 +74,7 @@ public class ProductController {
         Product product = productService.getAllProducts().stream()
                 .filter(p -> p.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("无效的商品ID: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid Product ID. " + id));
         model.addAttribute("product", product);
         return "product_admin";
     }

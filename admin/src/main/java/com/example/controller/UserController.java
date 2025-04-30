@@ -3,10 +3,13 @@ package com.example.controller;
 
 import com.example.service.UserService;
 import com.example.entity.User;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 /**
@@ -40,9 +43,31 @@ public class UserController {
 //        return "redirect:/user";
 //    }
 
+//    @PostMapping("/save")
+//    public String saveUser(@ModelAttribute User user) {
+//        // 自动填充时间字段的逻辑由 MyBatis-Plus 处理
+//        userService.saveUser(user);
+//        return "redirect:/user";
+//    }
+
+
     @PostMapping("/save")
-    public String saveUser(@ModelAttribute User user) {
-        // 自动填充时间字段的逻辑由 MyBatis-Plus 处理
+    public String saveUser(
+            @Valid @ModelAttribute("user") User user,
+            BindingResult bindingResult,
+            Model model
+    ) {
+        // 自定义密码验证
+        if (user.getPassword() == null || user.getPassword().trim().isEmpty()) {
+            bindingResult.rejectValue("password", "error.user", "Password cannot be empty");
+        }
+
+        // 处理验证错误
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("users", userService.getAllUsers());
+            return "user_admin";
+        }
+
         userService.saveUser(user);
         return "redirect:/user";
     }

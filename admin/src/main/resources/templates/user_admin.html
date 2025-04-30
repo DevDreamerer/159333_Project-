@@ -47,7 +47,18 @@
       </div>
       <div class="col-md-4">
         <label class="form-label">Password</label>
-        <input type="password" class="form-control" th:field="*{password}">
+<!--        <input type="password" class="form-control" th:field="*{password}">-->
+        <input
+                type="password"
+                class="form-control"
+                th:field="*{password}"
+                required
+                th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"
+        >
+        <!-- 错误提示 -->
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}">
+          <span th:text="${#fields.errors('password')}">Password cannot be empty</span>
+        </div>
       </div>
       <div class="col-md-4">
         <label class="form-label">Gender</label>
@@ -65,7 +76,10 @@
         <input type="text" class="form-control" th:field="*{mobile}">
       </div>
     </div>
-    <button type="submit" class="btn btn-primary mt-3">Save</button>
+    <div class="mt-3">
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a th:href="@{/user}" class="btn btn-outline-secondary ms-2">Cancel</a>
+    </div>
   </form>
 
   <!-- 用户列表 -->
@@ -96,4 +110,29 @@
   </table>
 </div>
 </body>
+
+<script>
+  // 实时密码验证
+  document.querySelector('input[name="password"]').addEventListener('input', function() {
+    if (this.value.trim() === '') {
+      this.classList.add('is-invalid');
+      this.nextElementSibling.style.display = 'block';
+    } else {
+      this.classList.remove('is-invalid');
+      this.nextElementSibling.style.display = 'none';
+    }
+  });
+
+  // 表单提交验证
+  document.querySelector('form').addEventListener('submit', function(e) {
+    const passwordInput = document.querySelector('input[name="password"]');
+    if (passwordInput.value.trim() === '') {
+      e.preventDefault();
+      passwordInput.classList.add('is-invalid');
+      passwordInput.nextElementSibling.style.display = 'block';
+      passwordInput.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+</script>
+
 </html>
