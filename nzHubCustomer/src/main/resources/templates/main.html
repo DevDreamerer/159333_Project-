@@ -51,11 +51,11 @@
 
 
     <div th:each="productCategory:${levelOneProductList}">
-        <div class="content mar_20">
-<!--            <img th:src="'/images/banner'+${productCategoryStat.index}+'.png'" width="1200" />-->
-            <!-- 添加版本号参数 -->
-            <img th:src="'/images/banner'+${productCategoryStat.index}+'.png?v=20231001'" width="1200" />
-        </div>
+<!--        <div class="content mar_20">-->
+<!--&lt;!&ndash;            <img th:src="'/images/banner'+${productCategoryStat.index}+'.png'" width="1200" />&ndash;&gt;-->
+<!--            &lt;!&ndash; 添加版本号参数 &ndash;&gt;-->
+<!--            <img th:src="'/images/banner'+${productCategoryStat.index}+'.png?v=20201'" width="1000" />-->
+<!--        </div>-->
         <div class="i_t mar_10">
             <span class="floor_num" th:text="${productCategory.name}"></span> <span class="fl" th:text="${productCategory.name}"></span>
         </div>
@@ -92,26 +92,26 @@
                 </ul>
             </div>
 
-            <div class="fresh_right">
-                <ul>
-                    <!-- 根据分类索引选择图片和商品ID -->
-                    <li>
-                        <a th:href="@{'/product/detail/' + ${733 + productCategoryStat.index * 2}}">
-                            <img th:src="'/images/' + ${12 + productCategoryStat.index * 2} + '.png'"
-                                 height="220"
-                                 th:alt="'hot product' + ${733 + productCategoryStat.index * 2}" />
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{'/product/detail/' + ${734 + productCategoryStat.index * 2}}">
-                            <img th:src="'/images/' + ${13 + productCategoryStat.index * 2} + '.png'"
-                                 height="220"
-                                 style="margin-top: 5px"
-                                 th:alt="'hot product' + ${734 + productCategoryStat.index * 2}" />
-                        </a>
-                    </li>
-                </ul>
-            </div>
+<!--            <div class="fresh_right">-->
+<!--                <ul>-->
+<!--                    &lt;!&ndash; 根据分类索引选择图片和商品ID &ndash;&gt;-->
+<!--                    <li>-->
+<!--                        <a th:href="@{'/product/detail/' + ${733 + productCategoryStat.index * 2}}">-->
+<!--                            <img th:src="'/images/' + ${12 + productCategoryStat.index * 2} + '.png'"-->
+<!--                                 height="220"-->
+<!--                                 th:alt="'hot product' + ${733 + productCategoryStat.index * 2}" />-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a th:href="@{'/product/detail/' + ${734 + productCategoryStat.index * 2}}">-->
+<!--                            <img th:src="'/images/' + ${13 + productCategoryStat.index * 2} + '.png'"-->
+<!--                                 height="220"-->
+<!--                                 style="margin-top: 5px"-->
+<!--                                 th:alt="'hot product' + ${734 + productCategoryStat.index * 2}" />-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
         </div>
     </div>
 
