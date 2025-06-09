@@ -65,7 +65,7 @@
                     <div id="imgPlay1" class="imgPlay1">
                         <ul class="imgs" id="actor1">
                             <li><a href="/productDetail">
-                                <img th:src="'/images/top'+${productCategoryStat.index}+'.jpg'" style="width: 211px; height: 505px; object-fit: cover;" />
+                                <img th:src="'/images/top'+${productCategoryStat.index}+'.jpg?v=2021'" style="width: 211px; height: 505px; object-fit: cover;" />
                             </a></li>
 
                         </ul>
@@ -99,7 +99,7 @@
                         <a th:href="@{'/product/detail/' + ${733 + productCategoryStat.index * 2}}">
                             <img th:src="'/images/' + ${12 + productCategoryStat.index * 2} + '.png'"
                                  height="220"
-                                 th:alt="'推荐商品' + ${733 + productCategoryStat.index * 2}" />
+                                 th:alt="'hot product' + ${733 + productCategoryStat.index * 2}" />
                         </a>
                     </li>
                     <li>
@@ -107,7 +107,7 @@
                             <img th:src="'/images/' + ${13 + productCategoryStat.index * 2} + '.png'"
                                  height="220"
                                  style="margin-top: 5px"
-                                 th:alt="'推荐商品' + ${734 + productCategoryStat.index * 2}" />
+                                 th:alt="'hot product' + ${734 + productCategoryStat.index * 2}" />
                         </a>
                     </li>
                 </ul>

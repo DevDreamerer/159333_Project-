@@ -14,7 +14,7 @@
     <div class="regist">
         <div class="signup_img">
             <div class="image-wrapper">
-                <img src="/images/l_img.png" alt="Signup Visual" />
+                <img src="/images/login_1.png" alt="Signup Visual" />
                 <div class="image-overlay"></div>
             </div>
         </div>
@@ -127,8 +127,9 @@
             height: 100%;
         }
 
-        /* 容器布局优化 */
+        /* 容器布局优化 - 添加相对定位和位移 */
         .regist {
+            position: relative; /* 添加定位上下文 */
             display: flex;
             align-items: flex-start;
             justify-content: center;
@@ -136,6 +137,10 @@
             gap: 3rem;
             background: linear-gradient(135deg, #f7f8fa 0%, #f1f3f6 100%);
             min-height: 100vh;
+            left: -200px; /* 整体向左移动200px */
+            top: -200px; /* 整体向上移动200px */
+            width: calc(100% + 200px); /* 补偿宽度变化 */
+            min-height: calc(100vh + 200px); /* 补偿高度变化 */
         }
 
 
@@ -143,11 +148,11 @@
             position: sticky;
             top: 2rem;
             border-radius: 1.5rem;
-            left: 100px;
+            left: 200px;
             overflow: hidden;
-            transform: translateX(-150px) perspective(1000px) rotateY(-5deg);
+            transform: translateX(50px) perspective(1000px) rotateY(-5deg);
             box-shadow: 2rem 2rem 4rem rgba(0, 0, 0, 0.1);
-            max-width: 400px; /* 图片容器缩小 */
+            max-width: 500px; /* 图片容器缩小 */
         }
 
 
