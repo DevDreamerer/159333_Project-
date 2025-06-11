@@ -38,14 +38,14 @@ public class ProductController {
 //        model.addAttribute("product", new Product());
 //        return "product_admin";
 
-        // 加载所有一级分类
+        // Load all first-level classifications
         List<ProductCategory> levelOneCategories = productService.getCategoriesByType(1);
         model.addAttribute("levelOneCategories", levelOneCategories);
         model.addAttribute("product", new Product());
         return "product_admin";
     }
 
-    // 添加获取子分类的接口
+    // Add interface to get subcategories
     @GetMapping("/subcategories")
     @ResponseBody
     public List<ProductCategory> getSubcategories(@RequestParam Integer parentId) {

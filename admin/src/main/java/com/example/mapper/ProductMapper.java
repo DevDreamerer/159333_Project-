@@ -14,10 +14,10 @@ import java.util.List;
  */
 public interface ProductMapper extends BaseMapper<Product> {
 
-    // 自定义查询：根据分类 ID 查询商品
+    // Search Products by Category ID
     List<Product> findByCategoryId(@Param("categoryLevel") int level, @Param("categoryId") int categoryId);
 
-    // 自定义查询：根据名称模糊搜索
+    // search by name
     List<Product> searchByName(@Param("keyword") String keyword);
 
 }

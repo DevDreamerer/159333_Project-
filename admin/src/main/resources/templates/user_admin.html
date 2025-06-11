@@ -55,7 +55,7 @@
                 required
                 th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"
         >
-        <!-- 错误提示 -->
+        <!-- false -->
         <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}">
           <span th:text="${#fields.errors('password')}">Password cannot be empty</span>
         </div>
@@ -82,7 +82,7 @@
     </div>
   </form>
 
-  <!-- 用户列表 -->
+  <!-- user list -->
   <table class="table table-striped mt-4">
     <thead>
     <tr>
@@ -98,10 +98,9 @@
       <td th:text="${user.userName}"></td>
       <td th:text="${user.loginName}"></td>
       <td>
-        <!-- 删除链接路径修正为 /user/delete/{id} -->
         <a th:href="@{/user/delete/{id}(id=${user.id})}"
            class="btn btn-danger btn-sm">delete</a>
-        <!-- 编辑链接路径修正为 /user/edit/{id} -->
+
         <a th:href="@{/user/edit/{id}(id=${user.id})}"
            class="btn btn-warning btn-sm ms-2">edit</a>
       </td>
@@ -112,7 +111,7 @@
 </body>
 
 <script>
-  // 实时密码验证
+  // Real-time password verification
   document.querySelector('input[name="password"]').addEventListener('input', function() {
     if (this.value.trim() === '') {
       this.classList.add('is-invalid');
@@ -123,7 +122,7 @@
     }
   });
 
-  // 表单提交验证
+  // Form Submission Validation
   document.querySelector('form').addEventListener('submit', function(e) {
     const passwordInput = document.querySelector('input[name="password"]');
     if (passwordInput.value.trim() === '') {

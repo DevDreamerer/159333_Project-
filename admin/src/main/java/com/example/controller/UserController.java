@@ -23,9 +23,9 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    private final UserService userService; // 注入接口
+    private final UserService userService; // injection interface
 
-    // 通过构造函数注入
+    // Injection via constructor
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -57,12 +57,12 @@ public class UserController {
             BindingResult bindingResult,
             Model model
     ) {
-        // 自定义密码验证
+        // password verification
         if (user.getPassword() == null || user.getPassword().trim().isEmpty()) {
             bindingResult.rejectValue("password", "error.user", "Password cannot be empty");
         }
 
-        // 处理验证错误
+        // Handling validation errors
         if (bindingResult.hasErrors()) {
             model.addAttribute("users", userService.getAllUsers());
             return "user_admin";

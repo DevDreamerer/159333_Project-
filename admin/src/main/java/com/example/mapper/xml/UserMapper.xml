@@ -25,7 +25,7 @@
 <!--    </insert>-->
 
 
-    <!-- 插入用户 -->
+    <!-- Insert user -->
     <insert id="insert" parameterType="User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user (login_name, user_name, password, gender, email, mobile, create_time, update_time)
         VALUES (#{loginName}, #{userName}, #{password}, #{gender}, #{email}, #{mobile}, #{createTime}, #{updateTime})
@@ -44,7 +44,7 @@
 <!--    </update>-->
 
 
-    <!-- 更新用户 -->
+    <!-- update a user -->
     <update id="update" parameterType="User">
         UPDATE user SET
                         user_name = #{userName},
@@ -61,7 +61,7 @@
 <!--        DELETE FROM user WHERE id = #{id}-->
 <!--    </delete>-->
 
-    <!-- 删除用户 -->
+    <!-- Delete User -->
     <delete id="delete" parameterType="int">
         DELETE FROM user WHERE id = #{id}
     </delete>

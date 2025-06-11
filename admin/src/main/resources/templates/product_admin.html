@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Product management</title>
-  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- 自定义样式 -->
+
   <style>
     .action-buttons { min-width: 150px; }
     .price-column { color: #dc3545; font-weight: bold; }
@@ -18,7 +17,7 @@
       <i class="bi bi-arrow-left"></i> Return to Dashboard
     </a>
   </div>
-  <!-- 操作反馈消息 -->
+  <!-- Feedback-->
   <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
     <span th:text="${message}"></span>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -30,7 +29,7 @@
 
   <h1 class="mb-4">Product management</h1>
 
-  <!-- 搜索和分类过滤表单 -->
+  <!-- Search and Category Filter Forms -->
   <div class="card mb-4">
     <div class="card-body">
       <form class="row g-3" th:action="@{/product/search}" method="get">
@@ -44,7 +43,7 @@
     </div>
   </div>
 
-  <!-- 商品编辑/新增表单 -->
+  <!-- Product Edit/New Form -->
   <div class="card mb-4">
     <div class="card-header bg-primary text-white">
       <h5 class="mb-0" th:text="${product.id != null} ? 'Edit Product' : 'Add new product'"></h5>
@@ -104,7 +103,7 @@
             </select>
           </div>
 
-          <!-- 新增品牌字段 -->
+          <!-- Add Brand -->
           <div class="col-md-4">
             <label class="form-label">Brand</label>
             <input type="text" class="form-control" th:field="*{brand}" required>
@@ -125,7 +124,7 @@
     </div>
   </div>
 
-  <!-- 商品列表 -->
+  <!-- Product List -->
   <div class="card">
     <div class="card-header bg-light">
       <h5 class="mb-0">Product List</h5>
@@ -168,8 +167,7 @@
         <!--        <tr th:if="${products.isEmpty()}">-->
         <!--          <td colspan="6" class="text-center text-muted">暂无商品数据</td>-->
         <!--        </tr>-->
-        <!-- 使用安全导航操作符（?.） -->
-        <tr th:if="${products == null or products.isEmpty()}"> <!-- 或 ${products == null or products.isEmpty()} -->
+        <tr th:if="${products == null or products.isEmpty()}">
           <td colspan="6" class="text-center text-muted">No product data available</td>
         </tr>
         </tbody>
@@ -178,14 +176,14 @@
   </div>
 </div>
 
-<!-- Bootstrap JS 和依赖 -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Bootstrap Icons -->
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
 
 <script>
-  // 配置常量
+  // Configuration Constants
   const CATEGORY_API = '/product/subcategories?parentId=';
   const SELECTORS = {
     levelOne: '#levelOne',
@@ -199,39 +197,39 @@
       this.init();
     }
 
-    // 初始化入口
+    // init
     init() {
       this.bindEvents();
       this.loadInitialCategories();
       this.preselectExistingCategories();
     }
 
-    // 事件绑定
+
     bindEvents() {
-      // 一级分类变化
+      // level 1
       document.querySelector(SELECTORS.levelOne).addEventListener('change', (e) => {
         this.loadSubCategories(e.target.value, SELECTORS.levelTwo, () => {
           this.clearSelect(SELECTORS.levelThree);
         });
       });
 
-      // 二级分类变化
+      // level 2
       document.querySelector(SELECTORS.levelTwo).addEventListener('change', (e) => {
         this.loadSubCategories(e.target.value, SELECTORS.levelThree);
       });
 
-      // 搜索后重新初始化
+      // Reinitialisation after search
       document.querySelector(SELECTORS.searchForm)?.addEventListener('submit', () => {
         setTimeout(() => this.init(), 100); // 延迟确保DOM更新
       });
     }
 
-    // 加载初始分类
+    // Load Initial Classification
     loadInitialCategories() {
       this.loadSubCategories(0, SELECTORS.levelOne); // parentId=0加载一级分类
     }
 
-    // 预选已有分类（编辑时使用）
+    // Preselection of existing categories (for editing)
     async preselectExistingCategories() {
       const levelOneId = document.querySelector(SELECTORS.levelOne).value;
       const levelTwoId = document.querySelector(SELECTORS.levelTwo).value;
@@ -245,7 +243,7 @@
       }
     }
 
-    // 核心加载方法
+    // loading
     async loadSubCategories(parentId, targetSelector, selectedId = null) {
       try {
         const response = await fetch(`${CATEGORY_API}${parentId}`);
@@ -254,7 +252,7 @@
         const select = document.querySelector(targetSelector);
         select.innerHTML = this.generateOptions(categories, selectedId);
 
-        // 自动触发change事件
+        // Automatically triggers the change event
         if (selectedId) select.dispatchEvent(new Event('change'));
       } catch (error) {
         console.error('Failed to load category.', error);
@@ -262,7 +260,7 @@
       }
     }
 
-    // 生成选项HTML
+
     generateOptions(categories, selectedId) {
       let html = '<option value="">please select...</option>';
       categories.forEach(cat => {
@@ -272,13 +270,13 @@
       return html;
     }
 
-    // 清空下级分类
+    // Empty lower level categories
     clearSelect(selector) {
       document.querySelector(selector).innerHTML = '<option value="">Please select the parent category first</option>';
     }
   }
 
-  // 页面初始化
+  // Page Initialisation
   document.addEventListener('DOMContentLoaded', () => {
     new CategoryManager();
   });

@@ -51,7 +51,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     public List<Product> findByCategoryId(int level, int categoryId) {
         //return productMapper.findByCategoryId(level, categoryId);
         List<Product> products = productMapper.findByCategoryId(level, categoryId);
-        // 确保返回非 null 列表
+        // Ensure that a non-null list is returned
         return products != null ? products : new ArrayList<>();
     }
 
@@ -59,7 +59,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     public List<Product> searchByName(String keyword) {
         //return productMapper.searchByName(keyword);
         List<Product> products = productMapper.searchByName(keyword);
-        // 确保返回非 null 列表
+        // Ensure that a non-null list is returned
         return products != null ? products : new ArrayList<>();
     }
 

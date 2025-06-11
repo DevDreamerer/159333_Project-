@@ -16,12 +16,12 @@ public class AdminInterceptor implements HandlerInterceptor {
                              Object handler) throws Exception {
         HttpSession session = request.getSession();
 
-        // 放行登录相关请求
+        // Login Related Requests
         if (request.getRequestURI().startsWith("/admin/login")) {
             return true;
         }
 
-        // 检查管理员登录状态
+        // Check Administrator Login Status
         if (session.getAttribute("admin") == null) {
             response.sendRedirect("/admin/login");
             return false;
