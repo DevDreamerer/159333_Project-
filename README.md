@@ -8,7 +8,7 @@
 The project code is divided into two branches, each corresponding to one role of the system:
 
 - [`customer_branch`]: Customer-facing site and functionality
-- [`admin_branch`]: Admin portal for backend management
+- [`master`]: Admin portal for backend management
 
 > ✅ Please switch to the appropriate branch depending on which part of the system you'd like to explore.
 
