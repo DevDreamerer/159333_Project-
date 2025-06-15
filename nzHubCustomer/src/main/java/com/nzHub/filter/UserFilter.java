@@ -13,12 +13,7 @@ public class UserFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
 
-//        if(session.getAttribute("user") == null){
-//            response.sendRedirect("/login");
-//            return;//修改
-//        }else{
-//            filterChain.doFilter(servletRequest,servletResponse);
-//        }
+
         String path = request.getRequestURI();
         if (!path.startsWith("/productCategory/main") && session.getAttribute("user") == null) {
             response.sendRedirect("/login");
@@ -26,18 +21,5 @@ public class UserFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
         }
 
-
-//        if (session.getAttribute("user") == null) {
-//            String requestType = request.getHeader("X-Requested-With");
-//            if ("XMLHttpRequest".equals(requestType)) { // AJAX 请求
-//                response.setContentType("application/json;charset=UTF-8");
-//                response.getWriter().write("{\"error\": \"未登录\"}");
-//            } else { // 普通浏览器请求
-//                response.sendRedirect("/login");
-//            }
-//            return;
-//        }
-//
-//        filterChain.doFilter(servletRequest, servletResponse);
     }
 }

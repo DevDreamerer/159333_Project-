@@ -14,8 +14,6 @@ import java.time.LocalDateTime;
  * 
  * </p>
  *
- * @author admin
- * @since 2021-11-22
  */
 @Data
   @EqualsAndHashCode(callSuper = false)
@@ -24,68 +22,67 @@ import java.time.LocalDateTime;
     private static final long serialVersionUID=1L;
 
       /**
-     * 主键
+     * primary key
      */
         @TableId(value = "id", type = IdType.AUTO)
       private Integer id;
 
       /**
-     * 名称
+     * name
      */
       private String name;
 
       /**
-     * 描述
+     * description
      */
       private String description;
 
       /**
-     * 价格
+     * price
      */
       private Float price;
 
       /**
-     * 库存
+     * stock
      */
       private Integer stock;
 
       /**
-     * 分类1
+     * category one
      */
       private Integer categoryleveloneId;
 
       /**
-     * 分类2
+     * category two
      */
       private Integer categoryleveltwoId;
 
       /**
-     * 分类3
+     * category three
      */
       private Integer categorylevelthreeId;
 
       /**
-     * 文件名称
+     * file name
      */
       private String fileName;
 
       /**
-       * 产地
+       * brand
        */
       private String brand;
 
       /**
-       * 产地
+       * origin
        */
       private String origin;
 
       /**
-       * pi
+       * rating
        */
       private Float rating;
 
-  @TableField("shelf_time")  // 明确指定数据库列名
-  private LocalDateTime shelfTime;  // 字段名改为驼峰式
-
+  @TableField("shelf_time")  // Specify database column names explicitly
+  private LocalDateTime shelfTime; 
 
 }

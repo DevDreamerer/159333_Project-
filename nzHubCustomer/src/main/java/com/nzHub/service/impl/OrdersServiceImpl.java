@@ -20,11 +20,9 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ *   service implement class
  * </p>
  *
- * @author admin
- * @since 2021-11-22
  */
 @Service
 public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> implements OrdersService {

@@ -5,8 +5,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Data
 public class UserLoginForm {
-    @NotEmpty(message = "登录名不能为空")
+    @NotEmpty(message = "user name can not be empty")
     private String loginName;
-    @NotEmpty(message = "密码不能为空")
+    @NotEmpty(message = "password can not be empty")
     private String password;
 }

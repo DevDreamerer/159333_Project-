@@ -68,7 +68,7 @@
                         <tr>
                             <td th:text="'Name:'+${product.name}"></td>
                             <td th:text="'Price:'+${product.price}"></td>
-                            <!-- 修改为动态绑定 -->
+
                             <td th:text="'Brand:' + ${product.brand}"></td>
                             <td>&nbsp;</td>
 
@@ -97,34 +97,34 @@
                             <td th:text="${product.description}"></td>
                         </tr>
                     </table>
-                    <!-- 新增CSS样式 -->
+
                     <style>
                         .detail-images {
                             display: flex;
                             justify-content: center;
-                            gap: 20px; /* 图片间距 */
+                            gap: 20px;
                             margin: 20px 0;
                         }
                         .detail-image {
-                            border-radius: 8px; /* 圆角 */
-                            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 阴影 */
-                            transition: transform 0.3s ease; /* 悬停动画 */
+                            border-radius: 8px;
+                            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                            transition: transform 0.3s ease;
                         }
                         .detail-image:hover {
-                            transform: scale(1.05); /* 悬停放大 */
+                            transform: scale(1.05);
                         }
                     </style>
 
-                    <!-- 图片容器 -->
+
                     <div class="detail-images">
-                        <!-- 图片1：detail1_xxx.jpg -->
+                        <!-- pic1：detail1_xxx.jpg -->
                         <img th:src="'/images/detail1_' + ${product.fileName}"
                              class="detail-image"
                              width="250"
                              height="200"
                              alt="productDetail1">
 
-                        <!-- 图片2：detail2_xxx.jpg -->
+                        <!-- pic2：detail2_xxx.jpg -->
                         <img th:src="'/images/detail2_' + ${product.fileName}"
                              class="detail-image"
                              width="250"

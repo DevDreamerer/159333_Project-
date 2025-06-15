@@ -7,11 +7,9 @@ import com.nzHub.form.UserRegisterForm;
 
 /**
  * <p>
- *  服务类
+ *  service class
  * </p>
  *
- * @author admin
- * @since 2021-11-22
  */
 public interface UserService extends IService<User> {
     public User register(UserRegisterForm userRegisterForm);

@@ -21,22 +21,22 @@ public class RedirectController {
     @GetMapping("/{url}")
     public ModelAndView redirect(@PathVariable("url") String url, HttpSession session){
 
-      //修改
+      //modify
         if ("error".equals(url)) {
-            throw new RuntimeException("手动抛出异常，交给 Spring Boot 处理 /error");
+            throw new RuntimeException("Manually throw an exception and let Spring Boot handle it");
         }
 
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(url);
-        //判断是否为登录用户
+        //Check whether the user is already logged in
         User user = (User) session.getAttribute("user");
         if(user == null){
-            //未登录
+            //no login
             modelAndView.addObject("cartList", new ArrayList<>());
         }else{
-            //登录用户
-            //查询该用户的购物车记录
+            //login user
+            //query the cart history of user
             modelAndView.addObject("cartList", this.cartService.findVOListByUserId(user.getId()));
         }
         return modelAndView;

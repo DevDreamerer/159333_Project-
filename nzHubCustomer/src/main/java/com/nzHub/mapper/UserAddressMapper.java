@@ -5,11 +5,9 @@ import com.nzHub.entity.UserAddress;
 
 /**
  * <p>
- *  Mapper 接口
+ *  Mapper
  * </p>
  *
- * @author admin
- * @since 2021-11-22
  */
 public interface UserAddressMapper extends BaseMapper<UserAddress> {
     public int setDefault();

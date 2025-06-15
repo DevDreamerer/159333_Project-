@@ -18,11 +18,9 @@ import java.util.stream.Collectors;
 
 /**
  * <p>
- *  服务实现类
+ *   service implement class
  * </p>
  *
- * @author admin
- * @since 2021-11-22
  */
 @Service
 public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMapper, ProductCategory> implements ProductCategoryService {
@@ -33,16 +31,16 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
     private ProductMapper productMapper;
 
     /**
-     * 构建商品分类菜单
+     * create product category menu
      * @return
      */
     @Override
     public List<ProductCategoryVO> buildProductCategoryMenu() {
-        //1、查询所有的商品分类数据
+        //1. Query all product category data
         List<ProductCategory> productCategoryList = this.productCategoryMapper.selectList(null);
-        //2、数据类型转换成 ProductCategoryVO
+        //2. Convert the datatype into ProductCategoryVO
         List<ProductCategoryVO> productCategoryVOList = productCategoryList.stream().map(ProductCategoryVO::new).collect(Collectors.toList());
-        //3、进行父子级菜单的封装
+        //3. Encapsulate parent-child menus.
         List<ProductCategoryVO> levelOneList = buildMenu(productCategoryVOList);
         return levelOneList;
     }
@@ -58,7 +56,7 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
     }
 
     /**
-     * 查询一级分类对应的商品信息
+     * check product info for the level one category
      */
     public void getLevelOneProduct(List<ProductCategoryVO> list){
         for (ProductCategoryVO vo : list) {
@@ -70,11 +68,11 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
     }
 
     /**
-     * 构建菜单
+     * create menu
      * @param list
      */
     public List<ProductCategoryVO> buildMenu(List<ProductCategoryVO> list){
-        //找到一级菜单
+        //find level one category
         List<ProductCategoryVO> levelOneList = list.stream().filter(c -> c.getParentId() == 0).collect(Collectors.toList());
         for (ProductCategoryVO vo : levelOneList) {
             recursion(list,vo);
@@ -83,15 +81,15 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
     }
 
     /**
-     * 递归分类
+     * Recursive classification
      * @param list
      * @param vo
      */
     public void recursion(List<ProductCategoryVO> list,ProductCategoryVO vo){
-        //找到子菜单
+        //find submenu
         List<ProductCategoryVO> children = getChildren(list, vo);
         vo.setChildren(children);
-        //继续查找子菜单
+        //continue to find subsubmenu
         if(children.size() > 0){
             for (ProductCategoryVO child : children) {
                 recursion(list,child);
@@ -100,7 +98,7 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
     }
 
     /**
-     * 获取子菜单
+     * get submenu
      * @param list
      * @param vo
      */

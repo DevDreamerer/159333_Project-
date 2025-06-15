@@ -12,8 +12,6 @@ import java.io.Serializable;
  * 
  * </p>
  *
- * @author admin
- * @since 2021-11-22
  */
 @Data
   @EqualsAndHashCode(callSuper = false)
@@ -22,23 +20,23 @@ import java.io.Serializable;
     private static final long serialVersionUID=1L;
 
       /**
-     * 主键
+     * primary key
      */
         @TableId(value = "id", type = IdType.AUTO)
       private Integer id;
 
       /**
-     * 名称
+     * name
      */
       private String name;
 
       /**
-     * 父级目录id
+     * parent id
      */
       private Integer parentId;
 
       /**
-     * 级别(1:一级 2：二级 3：三级)
+     * level(1:one 2：two 3：three)
      */
       private Integer type;
 

@@ -19,11 +19,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  * <p>
- *  前端控制器
+ *  frontend controller
  * </p>
  *
- * @author admin
- * @since 2021-11-22
  */
 @Controller
 @RequestMapping("/cart")
@@ -36,7 +34,7 @@ public class CartController {
     private UserAddressService userAddressService;
 
     /**
-     * 添加购物车
+     * add cart
      * @return
      */
     @GetMapping("/add/{productId}/{price}/{quantity}")
@@ -47,13 +45,13 @@ public class CartController {
             HttpSession session
     ){
         if(productId == null || price == null || quantity == null){
-            log.info("【添加购物车】参数为空");
+            log.info("[add cart]empty parameter");
             throw new nzHubException(ResponseEnum.PARAMETER_NULL);
         }
-        //判断是否为登录用户
+        //Check whether the user is already logged in
         User user = (User) session.getAttribute("user");
         if(user == null){
-            log.info("【添加购物车】当前为未登录状态");
+            log.info("[add cart]You have not log in, please login first");
             throw new nzHubException(ResponseEnum.NOT_LOGIN);
         }
         Cart cart = new Cart();
@@ -63,23 +61,23 @@ public class CartController {
         cart.setCost(price * quantity);
         Boolean add = this.cartService.add(cart);
         if(!add){
-            log.info("【添加购物车】添加失败");
+            log.info("[add cart]fail to add cart");
             throw new nzHubException(ResponseEnum.CART_ADD_ERROR);
         }
         return "redirect:/cart/get";
     }
 
     /**
-     * 查看购物车
+     * view the cart
      * @param session
      * @return
      */
     @GetMapping("/get")
     public ModelAndView get(HttpSession session){
-        //判断是否为登录用户
+        //Check whether the user is already logged in
         User user = (User) session.getAttribute("user");
         if(user == null){
-            log.info("【添加购物车】当前为未登录状态");
+            log.info("[add cart]You have not log in, please login first");
             throw new nzHubException(ResponseEnum.NOT_LOGIN);
         }
         ModelAndView modelAndView = new ModelAndView();
@@ -89,7 +87,7 @@ public class CartController {
     }
 
     /**
-     * 更新购物车
+     * update cart
      * @return
      */
     @PostMapping("/update/{id}/{quantity}/{cost}")
@@ -101,13 +99,13 @@ public class CartController {
             HttpSession session
     ){
         if(id == null || quantity == null || cost == null){
-            log.info("【更新购物车】参数为空");
+            log.info("[add cart]empty parameter");
             throw new nzHubException(ResponseEnum.PARAMETER_NULL);
         }
-        //判断是否为登录用户
+        //Check whether the user is already logged in
         User user = (User) session.getAttribute("user");
         if(user == null){
-            log.info("【更新购物车】当前为未登录状态");
+            log.info("[add cart]You have not log in, please login first");
             throw new nzHubException(ResponseEnum.NOT_LOGIN);
         }
         if(this.cartService.update(id, quantity, cost)) return "success";
@@ -115,7 +113,7 @@ public class CartController {
     }
 
     /**
-     * 删除购物车
+     * delete cart
      * @param id
      * @param session
      * @return
@@ -123,13 +121,13 @@ public class CartController {
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Integer id,HttpSession session){
         if(id == null){
-            log.info("【更新购物车】参数为空");
+            log.info("[update cart]empty parameter");
             throw new nzHubException(ResponseEnum.PARAMETER_NULL);
         }
-        //判断是否为登录用户
+        //Check whether the user is already logged in
         User user = (User) session.getAttribute("user");
         if(user == null){
-            log.info("【更新购物车】当前为未登录状态");
+            log.info("[update cart]You have not log in, please login first");
             throw new nzHubException(ResponseEnum.NOT_LOGIN);
         }
         Boolean delete = this.cartService.delete(id);
@@ -138,16 +136,16 @@ public class CartController {
     }
 
     /**
-     * 确认订单
+     * confirm order
      * @param session
      * @return
      */
     @GetMapping("/confirm")
     public ModelAndView confirm(HttpSession session){
-        //判断是否为登录用户
+        //Check whether the user is already logged in
         User user = (User) session.getAttribute("user");
         if(user == null){
-            log.info("【更新购物车】当前为未登录状态");
+            log.info("[update cart]You have not log in, please login first");
             throw new nzHubException(ResponseEnum.NOT_LOGIN);
         }
         ModelAndView modelAndView = new ModelAndView();
@@ -160,7 +158,7 @@ public class CartController {
     }
 
     /**
-     * 确认订单
+     * confirm order
      * @param userAddress
      * @param session
      * @return
@@ -172,13 +170,13 @@ public class CartController {
             String remark,
             HttpSession session){
         if(userAddress == null || address == null || remark == null){
-            log.info("【更新购物车】参数为空");
+            log.info("[update cart]empty parameter");
             throw new nzHubException(ResponseEnum.PARAMETER_NULL);
         }
-        //判断是否为登录用户
+        //Check whether the user is already logged in
         User user = (User) session.getAttribute("user");
         if(user == null){
-            log.info("【更新购物车】当前为未登录状态");
+            log.info("[update cart]You have not log in, please login first");
             throw new nzHubException(ResponseEnum.NOT_LOGIN);
         }
         ModelAndView modelAndView = new ModelAndView();

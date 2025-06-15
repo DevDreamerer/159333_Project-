@@ -8,11 +8,9 @@ import java.util.List;
 
 /**
  * <p>
- *  服务类
+ *  service class
  * </p>
  *
- * @author admin
- * @since 2021-11-22
  */
 public interface OrdersService extends IService<Orders> {
     public List<OrdersVO> findAllByUserId(Integer id);

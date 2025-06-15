@@ -20,11 +20,9 @@ import java.util.Random;
 
 /**
  * <p>
- *  服务实现类
+ *  service implement class
  * </p>
  *
- * @author admin
- * @since 2021-11-22
  */
 @Service
 @Slf4j
@@ -44,24 +42,22 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
     @Override
     @Transactional
     public Boolean add(Cart cart) {
-        //添加购物车
         int insert = this.cartMapper.insert(cart);
         if(insert != 1){
             throw new nzHubException(ResponseEnum.CART_ADD_ERROR);
         }
-        //商品减库存
         Integer stock = this.productMapper.getStockById(cart.getProductId());
         if(stock == null){
-            log.info("【添加购物车】商品不存在");
+            log.info("This product not exist");
             throw new nzHubException(ResponseEnum.PRODUCT_NOT_EXISTS);
         }
         if(stock == 0){
-            log.info("【添加购物车】库存不足");
+            log.info("The stock of this product is not sufficient");
             throw new nzHubException(ResponseEnum.PRODUCT_STOCK_ERROR);
         }
         Integer newStock = stock - cart.getQuantity();
         if(newStock < 0){
-            log.info("【添加购物车】库存不足");
+            log.info("The stock of this product is not sufficient");
             throw new nzHubException(ResponseEnum.PRODUCT_STOCK_ERROR);
         }
         this.productMapper.updateStockById(cart.getProductId(), newStock);
@@ -87,29 +83,29 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
     @Override
     @Transactional
     public Boolean update(Integer id, Integer quantity, Float cost) {
-        //更新库存
+        //update stock
         Cart cart = this.cartMapper.selectById(id);
         Integer oldQuantity = cart.getQuantity();
         if(quantity.equals(oldQuantity)){
-            log.info("【更新购物车】参数错误");
+            log.info("[update cart]wrong parameter");
             throw new nzHubException(ResponseEnum.CART_UPDATE_PARAMETER_ERROR);
         }
-        //查询商品库存
+        //query product stock
         Integer stock = this.productMapper.getStockById(cart.getProductId());
         Integer newStock = stock - (quantity - oldQuantity);
         if(newStock < 0){
-            log.info("【更新购物车】商品库存错误");
+            log.info("[update cart]wrong product stock");
             throw new nzHubException(ResponseEnum.PRODUCT_STOCK_ERROR);
         }
         Integer integer = this.productMapper.updateStockById(cart.getProductId(), newStock);
         if(integer != 1){
-            log.info("【更新购物车】更新商品库存失败");
+            log.info("[update cart]fail to update stock");
             throw new nzHubException(ResponseEnum.CART_UPDATE_STOCK_ERROR);
         }
-        //更新数据
+        //update data
         int update = this.cartMapper.update(id, quantity, cost);
         if(update != 1){
-            log.info("【更新购物车】更新失败");
+            log.info("[update cart]fail to update");
             throw new nzHubException(ResponseEnum.CART_UPDATE_ERROR);
         }
         return true;
@@ -118,19 +114,19 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
     @Override
     @Transactional
     public Boolean delete(Integer id) {
-        //更新商品库存
+        //update product stock
         Cart cart = this.cartMapper.selectById(id);
         Integer stock = this.productMapper.getStockById(cart.getProductId());
         Integer newStock = stock + cart.getQuantity();
         Integer integer = this.productMapper.updateStockById(cart.getProductId(), newStock);
         if(integer != 1){
-            log.info("【删除购物车】更新商品库存失败");
+            log.info("[delete cart]fail to delete stock");
             throw new nzHubException(ResponseEnum.CART_UPDATE_STOCK_ERROR);
         }
-        //删除购物车数据
+        //delete cart data
         int i = this.cartMapper.deleteById(id);
         if(i != 1){
-            log.info("【删除购物车】删除失败");
+            log.info("[delete cart]fail to delete");
             throw new nzHubException(ResponseEnum.CART_REMOVE_ERROR);
         }
         return true;
@@ -139,16 +135,16 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
     @Override
     @Transactional
     public Orders commit(String userAddress, String address, String remark, User user) {
-        //处理地址
+        //handle address
         if(!userAddress.equals("newAddress")){
             address = userAddress;
         }else{
             int i = this.userAddressMapper.setDefault();
             if(i == 0){
-                log.info("【确认订单】修饰默认地址失败");
+                log.info("[confirm order]fail to modify default address");
                 throw new nzHubException(ResponseEnum.USER_ADDRESS_SET_DEFAULT_ERROR);
             }
-            //将新地址存入数据库
+            //save new address into database
             UserAddress userAddress1 = new UserAddress();
             userAddress1.setIsdefault(1);
             userAddress1.setUserId(user.getId());
@@ -156,11 +152,11 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
             userAddress1.setAddress(address);
             int insert = this.userAddressMapper.insert(userAddress1);
             if(insert == 0){
-                log.info("【确认订单】添加新地址失败");
+                log.info("[confirm order]fail to add new address");
                 throw new nzHubException(ResponseEnum.USER_ADDRESS_ADD_ERROR);
             }
         }
-        //创建订单主表
+        //create order main form
         Orders orders = new Orders();
         orders.setUserId(user.getId());
         orders.setLoginName(user.getLoginName());
@@ -179,10 +175,10 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
         orders.setSerialnumber(seriaNumber);
         int insert = this.ordersMapper.insert(orders);
         if(insert != 1){
-            log.info("【确认订单】创建订单主表失败");
+            log.info("[confirm order]fail to create order form");
             throw new nzHubException(ResponseEnum.ORDERS_CREATE_ERROR);
         }
-        //创建订单从表
+        //create order subform
         QueryWrapper<Cart> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id", user.getId());
         List<Cart> carts = this.cartMapper.selectList(queryWrapper);
@@ -192,16 +188,16 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements Ca
             orderDetail.setOrderId(orders.getId());
             int insert1 = this.orderDetailMapper.insert(orderDetail);
             if(insert1 == 0){
-                log.info("【确认订单】创建订单详情失败");
+                log.info("[confirm order]fail to create");
                 throw new nzHubException(ResponseEnum.ORDER_DETAIL_CREATE_ERROR);
             }
         }
-        //清空当前用户购物车
+        //clean the cart
         QueryWrapper<Cart> queryWrapper1 = new QueryWrapper<>();
         queryWrapper1.eq("user_id", user.getId());
         int delete = this.cartMapper.delete(queryWrapper1);
         if(delete == 0){
-            log.info("【确认订单】清空用户购物车失败");
+            log.info("[confirm order]fail to clean the cart");
             throw new nzHubException(ResponseEnum.CART_REMOVE_ERROR);
         }
         return orders;

@@ -15,8 +15,6 @@ import java.time.LocalDateTime;
  * 
  * </p>
  *
- * @author admin
- * @since 2021-11-22
  */
 @Data
   @EqualsAndHashCode(callSuper = false)
@@ -25,38 +23,38 @@ import java.time.LocalDateTime;
     private static final long serialVersionUID=1L;
 
       /**
-     * 主键
+     * primary key
      */
         @TableId(value = "id", type = IdType.AUTO)
       private Integer id;
 
       /**
-     * 登录名
+     * login name
      */
       private String loginName;
 
       /**
-     * 用户名
+     * user name
      */
       private String userName;
 
       /**
-     * 密码
+     * password
      */
       private String password;
 
       /**
-     * 性别(1:男 0：女)
+     * gender(1:male 0：female)
      */
       private Integer gender;
 
       /**
-     * 邮箱
+     * email
      */
       private String email;
 
       /**
-     * 手机
+     * phone number
      */
       private String mobile;
 

@@ -15,11 +15,9 @@ import java.util.ArrayList;
 
 /**
  * <p>
- *  前端控制器
+ *  frontend controller
  * </p>
  *
- * @author admin
- * @since 2021-11-22
  */
 @Controller
 @RequestMapping("/productCategory")
@@ -31,7 +29,7 @@ public class ProductCategoryController {
     private CartService cartService;
 
     /**
-     * 首页数据
+     * date from homepage
      * @param session
      * @return
      */
@@ -39,18 +37,18 @@ public class ProductCategoryController {
     public ModelAndView main(HttpSession session){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("main");
-        //封装商品分类菜单
+        //Encapsulate product category menu
         modelAndView.addObject("list", this.productCategoryService.buildProductCategoryMenu());
-        //封装一级分类对应的商品信息
+        //Product information corresponding to the primary classification of packaging
         modelAndView.addObject("levelOneProductList",this.productCategoryService.findAllProductByCategoryLevelOne());
-        //判断是否为登录用户
+        //Check whether the user is already logged in
         User user = (User) session.getAttribute("user");
         if(user == null){
-            //未登录
+            //no login
             modelAndView.addObject("cartList", new ArrayList<>());
         }else{
-            //登录用户
-            //查询该用户的购物车记录
+            //login user
+            //query the cart history of user
             modelAndView.addObject("cartList", this.cartService.findVOListByUserId(user.getId()));
         }
         return modelAndView;

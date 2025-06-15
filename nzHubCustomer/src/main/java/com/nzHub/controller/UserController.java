@@ -26,11 +26,9 @@ import javax.validation.Valid;
 
 /**
  * <p>
- *  前端控制器
+ *  frontend controller
  * </p>
  *
- * @author admin
- * @since 2021-11-22
  */
 @Controller
 @RequestMapping("/user")
@@ -47,35 +45,33 @@ public class UserController {
     private UserAddressService userAddressService;
 
     /**
-     * 用户注册
      * @param userRegisterForm
      * @param bindingResult
      * @return
      */
     @PostMapping("/register")
     public String register(@Valid UserRegisterForm userRegisterForm, BindingResult bindingResult){
-        //非空校验
         if(bindingResult.hasErrors()){
-            log.info("【用户注册】用户信息不能为空");
+            log.info("Information can not be empty");
             throw new nzHubException(ResponseEnum.USER_INFO_NULL);
         }
         User register = this.userService.register(userRegisterForm);
         if(register == null){
-            log.info("【用户注册】添加用户失败");
+            log.info("Fail to register");
             throw new nzHubException(ResponseEnum.USER_REGISTER_ERROR);
         }
         return "redirect:/login";
     }
 
     /**
-     * 用户登录
+     * user login
      * @return
      */
     @PostMapping("/login")
     public String login(@Valid UserLoginForm userLoginForm, BindingResult bindingResult, HttpSession session){
-        //非空校验
+        //non-empty check
         if(bindingResult.hasErrors()){
-            log.info("【用户登录】用户信息不能为空");
+            log.info("[user login] user info can not be empty");
             throw new nzHubException(ResponseEnum.USER_INFO_NULL);
         }
         User login = this.userService.login(userLoginForm);
@@ -84,15 +80,15 @@ public class UserController {
     }
 
     /**
-     * 返回当前用户的订单列表
+     * return order list
      * @return
      */
     @GetMapping("/orderList")
     public ModelAndView ordersList(HttpSession session){
-        //判断是否为登录用户
+        //Check whether the user is already logged in
         User user = (User) session.getAttribute("user");
         if(user == null){
-            log.info("【更新购物车】当前为未登录状态");
+            log.info("[update cart]usr dose not login");
             throw new nzHubException(ResponseEnum.NOT_LOGIN);
         }
         ModelAndView modelAndView = new ModelAndView();
@@ -103,15 +99,15 @@ public class UserController {
     }
 
     /**
-     * 返回当前用户的地址列表
+     * return address list
      * @return
      */
     @GetMapping("/addressList")
     public ModelAndView addressList(HttpSession session){
-        //判断是否为登录用户
+        //Check whether the user is already logged in
         User user = (User) session.getAttribute("user");
         if(user == null){
-            log.info("【更新购物车】当前为未登录状态");
+            log.info("[update cart]user does not login");
             throw new nzHubException(ResponseEnum.NOT_LOGIN);
         }
         ModelAndView modelAndView = new ModelAndView();

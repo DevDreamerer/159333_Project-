@@ -15,8 +15,6 @@ import java.time.LocalDateTime;
  * 
  * </p>
  *
- * @author admin
- * @since 2021-11-22
  */
 @Data
   @EqualsAndHashCode(callSuper = false)
@@ -25,44 +23,44 @@ import java.time.LocalDateTime;
     private static final long serialVersionUID=1L;
 
       /**
-     * 主键
+     * primary key
      */
         @TableId(value = "id", type = IdType.AUTO)
       private Integer id;
 
       /**
-     * 用户主键
+     * user primary key
      */
       private Integer userId;
 
       /**
-     * 用户名
+     * user name
      */
       private String loginName;
 
       /**
-     * 用户地址
+     * user address
      */
       private String userAddress;
 
       /**
-     * 总金额
+     * total cost
      */
       private Float cost;
 
       /**
-     * 订单号
+     * order number
      */
       private String serialnumber;
 
       /**
-     * 创建时间
+     * create time
      */
         @TableField(fill = FieldFill.INSERT)
       private LocalDateTime createTime;
 
       /**
-     * 更新时间
+     * update time
      */
         @TableField(fill = FieldFill.INSERT_UPDATE)
       private LocalDateTime updateTime;

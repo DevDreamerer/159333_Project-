@@ -8,11 +8,9 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- *  服务实现类
+ *   service implement class
  * </p>
  *
- * @author admin
- * @since 2021-11-22
  */
 @Service
 public class OrderDetailServiceImpl extends ServiceImpl<OrderDetailMapper, OrderDetail> implements OrderDetailService {

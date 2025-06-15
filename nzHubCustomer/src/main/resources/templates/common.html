@@ -5,7 +5,7 @@
     <link type="text/css" rel="stylesheet" href="/css/style.css?v=1212"/>
 </div>
 
-<!-- 头文件 -->
+<!-- header -->
 <div th:fragment="header">
     <!-- top -->
     <div class="soubg">
@@ -65,7 +65,7 @@
     <!-- search -->
     <script type="text/javascript">
         $(function(){
-            //购物车总价
+            //total cart cost
             var array = $(".cost");
             var totalCost = 0;
             for(var i = 0;i < array.length;i++){
@@ -77,7 +77,7 @@
     </script>
 </div>
 
-<!-- 商品类目 -->
+<!-- product category -->
 <div th:fragment="category">
     <div class="menu_bg">
         <div class="menu">
@@ -117,7 +117,7 @@
     </div>
     <script type="text/javascript">
         $(function(){
-            //商品类目
+            //product category
             $(".leftNav ul li").hover(
                 function(){
                     $(this).find(".fj").addClass("nuw");
@@ -133,7 +133,7 @@
     </script>
 </div>
 
-<!-- 底部 -->
+<!-- footer -->
 <div th:fragment="footer">
     <div class="b_btm_bg b_btm_c" id="footer">
 
@@ -146,12 +146,9 @@
     </div>
 </div>
 
-<!-- 许可 -->
+<!-- permission -->
 <div th:fragment="permit">
     <div class="btmbg">
-        <!--        <div class="btm">-->
-        <!--            备案/许可证编号：蜀ICP备12009302号-1-www.dingguagua.com   Copyright © 2015-2018 尤洪商城网 All Rights Reserved. 复制必究 , Technical Support: Dgg Group <br />-->
-        <!--            <img src="/images/b_1.gif" width="98" height="33" /><img src="/images/b_2.gif" width="98" height="33" /><img src="/images/b_3.gif" width="98" height="33" /><img src="/images/b_4.gif" width="98" height="33" /><img src="/images/b_5.gif" width="98" height="33" /><img src="/images/b_6.gif" width="98" height="33" />-->
-        <!--        </div>-->
+
     </div>
 </div>

@@ -5,11 +5,11 @@ import java.util.Random;
 
 public class MD5Util {
     /**
-     * byte[]字节数组 转换成 十六进制字符串
+     * Convert a byte[] array to a hexadecimal string.
      *
-     * @param arr 要转换的byte[]字节数组
+     * @param arr The byte[] array to be converted.
      *
-     * @return  String 返回十六进制字符串
+     * @return  String Returns a hexadecimal string.
      */
     private static String hex(byte[] arr) {
         StringBuffer sb = new StringBuffer();
@@ -20,11 +20,11 @@ public class MD5Util {
     }
 
     /**
-     * MD5加密,并把结果由字节数组转换成十六进制字符串
+     * MD5 encryption, and convert the result from a byte array to a hexadecimal string.
      *
-     * @param str 要加密的内容
+     * @param str Content to be encrypted.
      *
-     * @return String 返回加密后的十六进制字符串
+     * @return String Return the encrypted hexadecimal string.
      */
     private static String md5Hex(String str) {
         try {
@@ -39,14 +39,14 @@ public class MD5Util {
     }
 
     /**
-     * 生成含有随机盐的密码
+     * Generate a password containing a random salt.
      *
-     * @param password 要加密的密码
+     * @param password The password to be encrypted.
      *
-     * @return String 含有随机盐的密码
+     * @return String The password containing the random salt.
      */
     public static String getSaltMD5(String password) {
-        // 生成一个16位的随机数
+        // Generate a 16-bit random number
         Random random = new Random();
         StringBuilder sBuilder = new StringBuilder(16);
         sBuilder.append(random.nextInt(99999999)).append(random.nextInt(99999999));
@@ -56,7 +56,7 @@ public class MD5Util {
                 sBuilder.append("0");
             }
         }
-        // 生成最终的加密盐
+        // Generate the final encryption salt
         String salt = sBuilder.toString();
         password = md5Hex(password + salt);
         char[] cs = new char[48];
@@ -70,13 +70,13 @@ public class MD5Util {
     }
 
     /**
-     * 验证加盐后是否和原密码一致
+     * Verify whether the salted password matches the original password.
      *
-     * @param password 原密码
+     * @param password Original password.
      *
-     * @param password 加密之后的密码
+     * @param password Encrypted password.
      *
-     *@return boolean true表示和原密码一致   false表示和原密码不一致
+     *@return boolean true indicates that the password matches the original password; false indicates that the password does not match the original password.
      */
     public static boolean getSaltverifyMD5(String password, String md5str) {
         char[] cs1 = new char[32];

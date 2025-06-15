@@ -5,11 +5,8 @@ import com.nzHub.entity.Cart;
 
 /**
  * <p>
- *  Mapper 接口
+ *  Mapper
  * </p>
- *
- * @author admin
- * @since 2021-11-22
  */
 public interface CartMapper extends BaseMapper<Cart> {
     public int update(Integer id,Integer quantity,Float cost);

@@ -18,11 +18,9 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- *  服务实现类
+ *   service implement class
  * </p>
  *
- * @author admin
- * @since 2021-11-22
  */
 @Service
 @Slf4j
@@ -32,61 +30,61 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private UserMapper userMapper;
 
     /**
-     * 用户注册
+     * user login
      * @param userRegisterForm
      * @return
      */
     @Override
     public User register(UserRegisterForm userRegisterForm) {
-        //用户名是否可用
+        //check the username is available or not
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("login_name", userRegisterForm.getLoginName());
         User one = this.userMapper.selectOne(queryWrapper);
         if(one != null){
-            log.info("【用户注册】用户名已存在");
+            log.info("[user registration]user name already exist");
             throw new nzHubException(ResponseEnum.USERNAME_EXISTS);
         }
-        //邮箱格式校验
+        //Email format validation
         if(!RegexValidateUtil.checkEmail(userRegisterForm.getEmail())){
-            log.info("【用户注册】邮箱格式错误");
+            log.info("[user registration]incorrect email format");
             throw new nzHubException(ResponseEnum.EMAIL_ERROR);
         }
-        //手机格式校验
+        //Phone number format validation
         if(!RegexValidateUtil.checkMobile(userRegisterForm.getMobile())){
-            log.info("【用户注册】手机格式错误");
+            log.info("[user registration]incorrect phone number format");
             throw new nzHubException(ResponseEnum.MOBILE_ERROR);
         }
-        //存储数据
+        //save data
         User user = new User();
         BeanUtils.copyProperties(userRegisterForm, user);
         user.setPassword(MD5Util.getSaltMD5(user.getPassword()));
         int insert = this.userMapper.insert(user);
         if(insert != 1){
-            log.info("【用户注册】添加用户失败");
+            log.info("[user registration]fail to add new user");
             throw new nzHubException(ResponseEnum.USER_REGISTER_ERROR);
         }
         return user;
     }
 
     /**
-     * 用户登录
+     * user login
      * @param userLoginForm
      * @return
      */
     @Override
     public User login(UserLoginForm userLoginForm) {
-        //判断用户名是否存在
+        //check username exist or not
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("login_name", userLoginForm.getLoginName());
         User user = this.userMapper.selectOne(queryWrapper);
         if(user == null){
-            log.info("【用户登录】用户名不存在");
+            log.info("[user login]user name already exist");
             throw new nzHubException(ResponseEnum.USERNAME_NOT_EXISTS);
         }
-        //判断密码是否正确
+        //check password is correct or not
         boolean saltverifyMD5 = MD5Util.getSaltverifyMD5(userLoginForm.getPassword(), user.getPassword());
         if(!saltverifyMD5){
-            log.info("【用户登录】密码错误");
+            log.info("[user login]incorrect password");
             throw new nzHubException(ResponseEnum.PASSWORD_ERROR);
         }
         return user;

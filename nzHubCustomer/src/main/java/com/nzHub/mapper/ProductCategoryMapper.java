@@ -5,11 +5,9 @@ import com.nzHub.entity.ProductCategory;
 
 /**
  * <p>
- *  Mapper 接口
+ *  Mapper
  * </p>
  *
- * @author admin
- * @since 2021-11-22
  */
 public interface ProductCategoryMapper extends BaseMapper<ProductCategory> {
 

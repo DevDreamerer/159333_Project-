@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 使用正则表达式进行表单验证
+ * Use regular expressions for form validation
  */
 public class RegexValidateUtil {
 
@@ -23,7 +23,7 @@ public class RegexValidateUtil {
     }
 
     /**
-     * 验证邮箱
+     * verify email
      *
      * @param email
      * @return
@@ -34,15 +34,12 @@ public class RegexValidateUtil {
     }
 
     /**
-     * 验证手机号码
+     * verify phone number
      *
      * @param mobile
      * @return
      */
-//    public static boolean checkMobile(String mobile) {
-//        String regex = "^((19[0-9])|(17[0-9])|(13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$";
-//        return check(mobile, regex);
-//    }
+
 
 
     public static boolean checkMobile(String mobile) {
@@ -52,7 +49,7 @@ public class RegexValidateUtil {
 
 
     /**
-     * 验证固话号码
+     * verify telephone bumber
      *
      * @param telephone
      * @return
@@ -63,7 +60,7 @@ public class RegexValidateUtil {
     }
 
     /**
-     * 验证传真号码
+     * verify fax
      *
      * @param fax
      * @return
@@ -74,7 +71,7 @@ public class RegexValidateUtil {
     }
 
     /**
-     * 验证QQ号码
+     * verify qq
      *
      * @param QQ
      * @return
