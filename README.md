@@ -31,7 +31,7 @@ The system includes two main roles: customer and administrator.
 - Product management: add, update, delete products; modify stock and pricing
 - Changes are reflected in real time on the customer interface
 
-All data is stored in a **MySQL database**, you can access the sql script through **customer_branch**.
+All data is stored in a **MySQL database**, you can access the sql script through **master** or **customer_branch**, the file name is **script.sql**.
 
 ---
 
