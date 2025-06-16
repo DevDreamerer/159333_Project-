@@ -26,7 +26,7 @@ The system includes two main roles: customer and administrator.
 - View order history
 
 ### 🛠 Administrator Features
-- Secure admin login with input validation
+- Secure admin login with input validation （At present, there is only one administrator account with the username 'admin' and password 'admin666'）
 - User management: create, update, search, and delete inactive users
 - Product management: add, update, delete products; modify stock and pricing
 - Changes are reflected in real time on the customer interface
