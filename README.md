@@ -33,6 +33,8 @@ The system includes two main roles: customer and administrator.
 
 All data is stored in a **MySQL database**, you can access the sql script through **master** or **customer_branch**, the file name is **script.sql**.
 
+⚠️Note: Everyone's database path, username, and password may be different, so in order to successfully run the code, you need to change the relevant information of the database in the **application.yml** file in the java code, and change the path, username, and password to match your database.
+
 ---
 
 ## 🧰 Tech Stack
